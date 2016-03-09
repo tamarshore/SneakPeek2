@@ -12,15 +12,15 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 // In this case, the fragment displays simple text based on the page
-public class PageFragment extends Fragment {
+public class Home extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
 
-    public static PageFragment newInstance(int page) {
+    public static Home newInstance(int page) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
-        PageFragment fragment = new PageFragment();
+        Home fragment = new Home();
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,7 +37,7 @@ public class PageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_page, container, false);
+        View view = inflater.inflate(R.layout.home_page, container, false);
         // Set up the ViewPager, attaching the adapter and setting up a listener for when the
         // user swipes between sections.
         ViewPager pager = (ViewPager) view.findViewById(R.id.viewpager);
