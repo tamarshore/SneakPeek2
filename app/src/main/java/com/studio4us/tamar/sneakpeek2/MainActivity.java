@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    return PageFragment.newInstance(0);
+                    return Home.newInstance(0);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
                     return Upload.newInstance(1);
                 case 2: // Fragment # 1 - This will show SecondFragment
