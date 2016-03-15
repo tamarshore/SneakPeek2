@@ -8,6 +8,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="H5AVFyTBNwFX5DD7R1mTE2Syx0MVPJhAZhk4yxgz" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="doycEUOtqY5sOey3FIDUdOGffNBUMGVpM3H47KSA" />
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,4 +23,6 @@
         </activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

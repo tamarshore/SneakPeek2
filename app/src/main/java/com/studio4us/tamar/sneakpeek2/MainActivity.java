@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);

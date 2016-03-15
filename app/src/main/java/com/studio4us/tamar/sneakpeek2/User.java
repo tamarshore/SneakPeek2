@@ -54,8 +54,8 @@ public class User extends Fragment {
 
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 3;
-        private String tabTitles[] = new String[] {"Posts", "Favorites", "Settings"};
+        final int PAGE_COUNT = 2;
+        private String tabTitles[] = new String[] {"Favorites", "Settings"};
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -69,12 +69,10 @@ public class User extends Fragment {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: // Fragment #0 - Posts
-                    return Posts.newInstance(0);
-                case 1: // Fragment # 1 - Favorites
-                    return Favorites.newInstance(1);
-                case 2: // Fragment # 2 - Settings
-                    return Settings.newInstance(2);
+                case 0: // Fragment # 0 - Favorites
+                    return Favorites.newInstance();
+                case 1: // Fragment # 1 - Settings
+                    return Settings.newInstance();
                 default:
                     return null;
             }
