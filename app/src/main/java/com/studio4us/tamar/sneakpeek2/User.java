@@ -18,9 +18,8 @@ public class User extends Fragment {
 
     private int mPage;
 
-    public static User newInstance(int page) {
+    public static User newInstance() {
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
         User user = new User();
         user.setArguments(args);
         return user;
@@ -29,7 +28,6 @@ public class User extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_PAGE);
     }
 
     // Inflate the fragment layout we defined above for this fragment

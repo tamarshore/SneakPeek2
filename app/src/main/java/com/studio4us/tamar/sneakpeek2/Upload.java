@@ -12,15 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
+
 // In this case, the fragment displays simple text based on the page
-public class Upload extends Fragment {
-    public static final String ARG_PAGE = "ARG_PAGE";
+public class Upload extends Fragment implements View.OnClickListener {
 
-    private int mPage;
+    EditText content;
+    String tip;
+    Button upload;
 
-    public static Upload newInstance(int page) {
+    public static Upload newInstance() {
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
         Upload upload = new Upload();
         upload.setArguments(args);
         return upload;
@@ -29,9 +31,6 @@ public class Upload extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_PAGE);
-
-
 
     }
 
@@ -40,9 +39,18 @@ public class Upload extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ulpoad_page, container, false);
-
+        content = (EditText) view.findViewById(R.id.content);
+        tip = content.getText().toString();
+        upload = (Button) view.findViewById(R.id.button);
+        upload.setOnClickListener(this);
 
         return view;
     }
 
+    @Override
+    public void onClick(View v) {
+        ParseObject testObject = new ParseObject("Tip");
+        testObject.put("TipContent", tip);
+        testObject.saveInBackground();
+    }
 }

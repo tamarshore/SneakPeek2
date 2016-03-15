@@ -1,5 +1,6 @@
 package com.studio4us.tamar.sneakpeek2;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,9 +20,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -57,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
-                    return Home.newInstance(0);
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return Upload.newInstance(1);
-                case 2: // Fragment # 1 - This will show SecondFragment
-                    return User.newInstance(2);
+                case 0: // Fragment # 0 - Home
+                    return Home.newInstance();
+                case 1: // Fragment # 1 - Upload
+                    return Upload.newInstance();
+                case 2: // Fragment # 2 - User
+                    return User.newInstance();
                 default:
                     return null;
             }
