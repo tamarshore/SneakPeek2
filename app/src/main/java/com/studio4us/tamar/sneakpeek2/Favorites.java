@@ -12,9 +12,8 @@ public class Favorites extends Fragment {
 
     private int mPage;
 
-    public static Favorites newInstance(int page) {
+    public static Favorites newInstance() {
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
         Favorites fav = new Favorites();
         fav.setArguments(args);
         return fav;

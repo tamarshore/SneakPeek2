@@ -11,9 +11,8 @@ public class Settings extends Fragment {
 
     private int mPage;
 
-    public static Settings newInstance(int page) {
+    public static Settings newInstance() {
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
         Settings settings = new Settings();
         settings.setArguments(args);
         return settings;
