@@ -62,8 +62,6 @@ public class ListViewAdapter extends BaseAdapter {
         // Set the results into TextViews
         holder.t.setText(tips.get(position).getTip());
 
-
-
         // Listen for ListView Item Click
         view.setOnClickListener(new View.OnClickListener() {
 
@@ -71,9 +69,8 @@ public class ListViewAdapter extends BaseAdapter {
             public void onClick(View arg0) {
                 // Send single item click data to SingleItemView Class
                 Intent intent = new Intent(mContext, SingleItemView.class);
-                // Pass all data rank
-                intent.putExtra("rank",
-                        (tips.get(position).getTip()));
+                // Pass all data tip
+                intent.putExtra("tip", (tips.get(position).getTip()));
                 // Start SingleItemView Class
                 mContext.startActivity(intent);
             }

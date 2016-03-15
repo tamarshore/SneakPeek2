@@ -16,9 +16,18 @@ import com.parse.ParseObject;
 
 // In this case, the fragment displays simple text based on the page
 public class Upload extends Fragment implements View.OnClickListener {
-
+    //content of the tip
     EditText content;
     String tip;
+
+    //company name
+    EditText company;
+    String name;
+
+    //Tags
+    EditText tags;
+    String tagsString;
+
     Button upload;
 
     public static Upload newInstance() {
@@ -40,17 +49,23 @@ public class Upload extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ulpoad_page, container, false);
         content = (EditText) view.findViewById(R.id.content);
-        tip = content.getText().toString();
+        company = (EditText) view.findViewById(R.id.company);
+        tags = (EditText) view.findViewById(R.id.tags);
         upload = (Button) view.findViewById(R.id.button);
         upload.setOnClickListener(this);
-
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        ParseObject testObject = new ParseObject("Tip");
-        testObject.put("TipContent", tip);
-        testObject.saveInBackground();
+        tip = content.getText().toString();
+        name = company.getText().toString();
+        tagsString = tags.getText().toString();
+
+        ParseObject tipObject = new ParseObject("Tip");
+        tipObject.put("TipContent", tip);
+        tipObject.put("CompanyName", name);
+        tipObject.put("Tags", tagsString);
+        tipObject.saveInBackground();
     }
 }
