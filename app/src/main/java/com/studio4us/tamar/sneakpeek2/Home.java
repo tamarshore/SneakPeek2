@@ -77,7 +77,7 @@ public class Home extends Fragment {
                 ParseQuery<ParseObject> query = new ParseQuery<>("Tip");
                 // Locate the column named "TipContent" in Parse.com and order list
                 // by ascending
-                query.orderByAscending("TipContent");
+                query.orderByAscending("createdAt");
                 ob = query.find();
                 for (ParseObject t : ob) {
                     TipsContent map = new TipsContent();
