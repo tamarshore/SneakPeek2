@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.parse.ParseObject;
@@ -26,6 +28,7 @@ public class Home extends Fragment {
     ListViewAdapter adapter;
     private List<TipsContent> tips = null;
     Context con;
+//    ImageButton likes;
 
     public static Home newInstance() {
         Bundle args = new Bundle();
@@ -49,8 +52,15 @@ public class Home extends Fragment {
         con = getActivity();
         // Execute RemoteDataTask AsyncTask
         new RemoteDataTask().execute();
+//        likes = (ImageButton) view.findViewById(R.id.like_icon);
+//        likes.setOnClickListener(this);
         return view;
     }
+//
+//    @Override
+//    public void onClick(View v) {
+//
+//    }
 
     public class RemoteDataTask extends AsyncTask<Void, Void, Void> {
 
@@ -59,8 +69,6 @@ public class Home extends Fragment {
             super.onPreExecute();
             // Create a progressdialog
             mProgressDialog = new ProgressDialog(con);
-            // Set progressdialog title
-            mProgressDialog.setTitle("Parse.com Custom ListView Tutorial");
             // Set progressdialog message
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -82,7 +90,7 @@ public class Home extends Fragment {
                 for (ParseObject t : ob) {
                     TipsContent map = new TipsContent();
                     map.setTip((String) t.get("TipContent"));
-
+                    map.setLikes((int) t.get("Likes"));
                     tips.add(map);
                 }
             } catch (com.parse.ParseException e) {
@@ -102,6 +110,8 @@ public class Home extends Fragment {
             listview.setAdapter(adapter);
             // Close the progressdialog
             mProgressDialog.dismiss();
+
+
         }
     }
 }
