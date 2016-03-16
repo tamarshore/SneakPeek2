@@ -66,6 +66,7 @@ public class Upload extends Fragment implements View.OnClickListener {
         tipObject.put("TipContent", tip);
         tipObject.put("CompanyName", name);
         tipObject.put("Tags", tagsString);
+        tipObject.put("Likes", 0);
         tipObject.saveInBackground();
     }
 }
