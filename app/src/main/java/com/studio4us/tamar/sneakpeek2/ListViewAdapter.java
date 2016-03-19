@@ -28,6 +28,7 @@ public class ListViewAdapter extends BaseAdapter {
     private List<TipsContent> tips = null;
     private ArrayList<TipsContent> arraylist;
     private ViewHolder holder;
+    boolean isLiked = true;
 
     public ListViewAdapter(Context context,
                            List<TipsContent> tips) {
@@ -71,28 +72,42 @@ public class ListViewAdapter extends BaseAdapter {
             holder.tags = (TextView) view.findViewById(R.id.hashtag);
 //            holder.imageView = (ImageView) view.findViewById(R.id.img);
             holder.likesCounter = (ImageButton) view.findViewById(R.id.like_icon);
+            holder.likesCounter.setBackgroundResource(R.drawable.ic_favorite_border_black_18dp);
             holder.likesCounter.setTag(position);
-            holder.likesCounter.setOnClickListener(new android.view.View.OnClickListener()
-            {
-                public void onClick(View v)
-                {
+            holder.likesCounter.setOnClickListener(new android.view.View.OnClickListener() {
+                public void onClick(View v) {
                     final int position = (Integer) v.getTag();
                     String id = tips.get(position).getObjectId();
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("Tip");
-                    System.out.println(id);
-
+                    //If the likes icon is clicked
+                    if(isLiked) {
+                        v.setBackgroundResource(R.drawable.ic_favorite_black_18dp);
+                        query.getInBackground(id, new GetCallback<ParseObject>() {
+                            public void done(ParseObject object, ParseException e) {
+                                if (e == null) {
+                                    object.increment("Likes");
+                                    object.saveInBackground();
+                                } else {
+                                    // something went wrong
+                                }
+                            }
+                        });
+                        //If the likes icon is unclicked
+                    } else {
+                    v.setBackgroundResource(R.drawable.ic_favorite_border_black_18dp);
                     query.getInBackground(id, new GetCallback<ParseObject>() {
                         public void done(ParseObject object, ParseException e) {
                             if (e == null) {
-                                object.increment("Likes");
+                                object.increment("Likes", -1);
                                 object.saveInBackground();
-                                holder.likes.setText(tips.get(position).getLikes());
                             } else {
                                 // something went wrong
                             }
                         }
                     });
+                }
 
+                isLiked = !isLiked; // reverse
                 }
             });
 
@@ -104,8 +119,6 @@ public class ListViewAdapter extends BaseAdapter {
         holder.likes.setText(tips.get(position).getLikes());
         holder.t.setText(tips.get(position).getTip());
         holder.tags.setText(tips.get(position).getTags());
-
-
 
         return view;
     }
