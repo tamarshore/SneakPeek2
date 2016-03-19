@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.parse.ParseFile;
@@ -57,8 +58,6 @@ public class Upload extends Fragment  implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     // Inflate the fragment layout we defined above for this fragment
@@ -75,8 +74,6 @@ public class Upload extends Fragment  implements View.OnClickListener {
         imageToUpload.setOnClickListener(this);
         upload.setOnClickListener(this);
 
-
-
         return view;
     }
 
@@ -84,34 +81,45 @@ public class Upload extends Fragment  implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        //Toast for empty tip
+        CharSequence text = "Please insert content";
+        CharSequence uploadingText = "Posting...";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getContext(), text, duration);
+        Toast uploadingToast = Toast.makeText(getContext(), uploadingText, duration);
+
         tip = content.getText().toString();
         name = company.getText().toString();
         tagsString = tags.getText().toString();
 
-        ParseFile imgFile = null;
+        //if the user inserted content
+        if (!tip.matches("")) {
+            uploadingToast.show();
+            ParseFile imgFile = null;
+            byte[] data = imageToUpload.toString().getBytes();
+            ParseFile imageFile = new ParseFile("img_selected", data);
+            imageFile.saveInBackground();
 
-        byte[] data = imageToUpload.toString().getBytes();
-        ParseFile imageFile = new ParseFile("img_selected", data);
-        imageFile.saveInBackground();
+            ParseObject tipObject = new ParseObject("Tip");
+            tipObject.put("TipContent", tip);
+            tipObject.put("CompanyName", name);
+            tipObject.put("Tags", tagsString);
+            tipObject.put("Likes", 0);
+            tipObject.put("Image", imageFile);
+            tipObject.saveInBackground();
 
-        ParseObject tipObject = new ParseObject("Tip");
-        tipObject.put("TipContent", tip);
-        tipObject.put("CompanyName", name);
-        tipObject.put("Tags", tagsString);
-        tipObject.put("Likes", 0);
-        tipObject.put("Image", imageFile);
-        tipObject.saveInBackground();
+            //handling the img to upload
+            switch (v.getId()) {
+                case R.id.imageToUpload:
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                    break;
+                case R.id.button:
 
-        //handling the img to upload
-        switch (v.getId()){
-            case R.id.imageToUpload:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                break;
-            case R.id.button:
-
-                break;
-
+                    break;
+            }
+        } else {
+            toast.show();
         }
     }
 
