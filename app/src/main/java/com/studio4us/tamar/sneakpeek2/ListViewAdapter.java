@@ -69,7 +69,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder.t = (TextView) view.findViewById(R.id.tip);
             holder.likes = (TextView) view.findViewById(R.id.likes_counter);
             holder.tags = (TextView) view.findViewById(R.id.hashtag);
-            holder.imageView = (ImageView) view.findViewById(R.id.img);
+//            holder.imageView = (ImageView) view.findViewById(R.id.img);
             holder.likesCounter = (ImageButton) view.findViewById(R.id.like_icon);
             holder.likesCounter.setTag(position);
             holder.likesCounter.setOnClickListener(new android.view.View.OnClickListener()
@@ -84,8 +84,9 @@ public class ListViewAdapter extends BaseAdapter {
                     query.getInBackground(id, new GetCallback<ParseObject>() {
                         public void done(ParseObject object, ParseException e) {
                             if (e == null) {
-                                System.out.println(object.get("Likes"));
-                                System.out.println(object.get("Likes"));
+                                object.increment("Likes");
+                                object.saveInBackground();
+                                holder.likes.setText(tips.get(position).getLikes());
                             } else {
                                 // something went wrong
                             }
