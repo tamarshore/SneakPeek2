@@ -35,52 +35,8 @@ public class User extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_page, container, false);
-        // Set up the ViewPager, attaching the adapter and setting up a listener for when the
-        // user swipes between sections.
-        ViewPager pager = (ViewPager) view.findViewById(R.id.viewpager);
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        SampleFragmentPagerAdapter adapter = new SampleFragmentPagerAdapter(getChildFragmentManager());
-
-        pager.setAdapter(adapter);
-        tabs.setViewPager(pager);
-
-        // Set Present tab as default
-        pager.setCurrentItem(1);
 
         return view;
-    }
-
-
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 2;
-        private String tabTitles[] = new String[] {"Favorites", "Settings"};
-
-        public SampleFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return PAGE_COUNT;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0: // Fragment # 0 - Favorites
-                    return Favorites.newInstance();
-                case 1: // Fragment # 1 - Settings
-                    return Settings.newInstance();
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            // Generate title based on item position
-            return tabTitles[position];
-        }
     }
 }
 
