@@ -7,13 +7,14 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.io.IOException;
+
 /**
  * Created by shanibilu on 3/15/16.
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     int[] images;
-
 
     public ImageAdapter(Context c, int[] images) {
         this.mContext = c;
@@ -46,4 +47,26 @@ public class ImageAdapter extends BaseAdapter {
 
         return imageView;
     }
+
+
+//
+//            public class MyUncaughtExceptionHandle implements Thread.UncaughtExceptionHandler {
+//                @Override
+//                public void uncaughtException(Thread thread, Throwable ex) {
+//                    if(ex.getClass().equals(OutOfMemoryError.class))
+//                    {
+//                        try {
+//                            android.os.Debug.dumpHprofData("/sdcard/dump.hprof");
+//                        }
+//                        catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    ex.printStackTrace();
+//
+//                    Thread.currentThread().setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandle());
+//
+//                }
+//
+//                }
 }

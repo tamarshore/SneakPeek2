@@ -10,6 +10,7 @@ public class TipsContent {
     private int likes;
     private String tag;
     private File image;
+    private String obId;
 
     public String getTip() {
         return tip;
@@ -43,7 +44,12 @@ public class TipsContent {
         this.likes = likes;
     }
 
-    public void addToLikes() {
-        this.likes += 1;
+    public void setObjectId(String obId) {
+        this.obId = obId;
     }
+
+    public String getObjectId() {
+        return this.obId;
+    }
+
 }
