@@ -28,7 +28,7 @@ public class ListViewAdapter extends BaseAdapter {
     private List<TipsContent> tips = null;
     private ArrayList<TipsContent> arraylist;
     private ViewHolder holder;
-    boolean isLiked = true;
+    boolean isLiked = false;
 
     public ListViewAdapter(Context context,
                            List<TipsContent> tips) {
@@ -76,9 +76,11 @@ public class ListViewAdapter extends BaseAdapter {
             holder.likesCounter.setTag(position);
             holder.likesCounter.setOnClickListener(new android.view.View.OnClickListener() {
                 public void onClick(View v) {
+                    isLiked = !isLiked; // reverse
                     final int position = (Integer) v.getTag();
                     String id = tips.get(position).getObjectId();
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("Tip");
+
                     //If the likes icon is clicked
                     if(isLiked) {
                         v.setBackgroundResource(R.drawable.ic_favorite_black_18dp);
@@ -87,6 +89,8 @@ public class ListViewAdapter extends BaseAdapter {
                                 if (e == null) {
                                     object.increment("Likes");
                                     object.saveInBackground();
+                                    tips.get(position).setLikes(object.getInt("Likes"));
+                                    notifyDataSetChanged();
                                 } else {
                                     // something went wrong
                                 }
@@ -100,6 +104,8 @@ public class ListViewAdapter extends BaseAdapter {
                             if (e == null) {
                                 object.increment("Likes", -1);
                                 object.saveInBackground();
+                                tips.get(position).setLikes(object.getInt("Likes"));
+                                notifyDataSetChanged();
                             } else {
                                 // something went wrong
                             }
@@ -107,7 +113,7 @@ public class ListViewAdapter extends BaseAdapter {
                     });
                 }
 
-                isLiked = !isLiked; // reverse
+
                 }
             });
 
