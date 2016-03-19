@@ -15,20 +15,47 @@ public class SplashScreen extends Activity {
     // references to our images
     int[] images = {
             R.drawable.apple,
-            R.drawable.wix,
-            R.drawable.google,
-            R.drawable.waze,
-            R.drawable.intel,
-            R.drawable.linkedin,
-            R.drawable.microsoft,
-            R.drawable.similarweb,
-            R.drawable.vernit,
-            R.drawable.viber,
-            R.drawable.ibm,
-            R.drawable.ebay,
-            R.drawable.dropbox,
-            R.drawable.whats,
-            R.drawable.insta
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+            R.drawable.apple,
+//            R.drawable.wix,
+//            R.drawable.google,
+//            R.drawable.waze,
+//            R.drawable.intel,
+//            R.drawable.similarweb,
+//            R.drawable.dropbox,
+//            R.drawable.whats,
+//            R.drawable.insta,
+//            R.drawable.similarweb,
+//            R.drawable.dropbox,
+//            R.drawable.whats,
+//            R.drawable.insta,
+//            R.drawable.whats,
+//            R.drawable.insta,
+
+
+//            R.drawable.viber,
+//            R.drawable.linkedin,
+
+//            R.drawable.microsoft,
+//            R.drawable.vernit,
+
+//            R.drawable.ibm,
+//            R.drawable.ebay,
+
+
+
 
     };
 
@@ -45,7 +72,7 @@ public class SplashScreen extends Activity {
             public void run(){
                 try{
 
-                    sleep(5200);
+                    sleep(6200);
 
                 }catch(InterruptedException e){
                     e.printStackTrace();

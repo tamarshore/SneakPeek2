@@ -13,7 +13,8 @@
         android:layout_marginTop="8dp"
         android:layout_above="@+id/likes_counter"
         android:src="@drawable/ic_favorite_black_18dp"
-        android:onClick="myClickHandler"
+        android:focusable="false"
+        android:onClick="addLikes"
         />
 
     <TextView

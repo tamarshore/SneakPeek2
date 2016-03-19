@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.parse.ParseObject;
@@ -53,15 +51,11 @@ public class Home extends Fragment {
         con = getActivity();
         // Execute RemoteDataTask AsyncTask
         new RemoteDataTask().execute();
-//        likes = (ImageButton) view.findViewById(R.id.like_icon);
-//        likes.setOnClickListener(this);
+
+
         return view;
     }
-//
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
+
 
     public class RemoteDataTask extends AsyncTask<Void, Void, Void> {
 
@@ -94,6 +88,7 @@ public class Home extends Fragment {
                     map.setLikes((int) t.get("Likes"));
                     map.setTags((String) t.get("Tags"));
                     map.setImage((int) t.get("Images"));
+                    map.setObjectId(t.getObjectId());
                     tips.add(map);
                 }
             } catch (com.parse.ParseException e) {
