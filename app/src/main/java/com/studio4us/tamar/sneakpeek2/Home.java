@@ -25,7 +25,6 @@ public class Home extends Fragment {
     ListViewAdapter adapter;
     private List<TipsContent> tips = null;
     Context con;
-//    ImageButton likes;
 
     public static Home newInstance() {
         Bundle args = new Bundle();
@@ -49,15 +48,11 @@ public class Home extends Fragment {
         con = getActivity();
         // Execute RemoteDataTask AsyncTask
         new RemoteDataTask().execute();
-//        likes = (ImageButton) view.findViewById(R.id.like_icon);
-//        likes.setOnClickListener(this);
+
+
         return view;
     }
-//
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
+
 
     public class RemoteDataTask extends AsyncTask<Void, Void, Void> {
 
@@ -88,6 +83,7 @@ public class Home extends Fragment {
                     TipsContent map = new TipsContent();
                     map.setTip((String) t.get("TipContent"));
                     map.setLikes((int) t.get("Likes"));
+                    map.setObjectId(t.getObjectId());
                     tips.add(map);
                 }
             } catch (com.parse.ParseException e) {
@@ -110,6 +106,8 @@ public class Home extends Fragment {
 
 
         }
+
+
     }
 }
 

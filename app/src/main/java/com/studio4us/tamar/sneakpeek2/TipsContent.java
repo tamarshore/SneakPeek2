@@ -6,6 +6,7 @@ package com.studio4us.tamar.sneakpeek2;
 public class TipsContent {
     private String tip;
     private int likes;
+    private String obId;
 
     public String getTip() {
         return tip;
@@ -23,7 +24,12 @@ public class TipsContent {
         this.likes = likes;
     }
 
-    public void addToLikes() {
-        this.likes += 1;
+    public void setObjectId(String obId) {
+        this.obId = obId;
     }
+
+    public String getObjectId() {
+        return this.obId;
+    }
+
 }
