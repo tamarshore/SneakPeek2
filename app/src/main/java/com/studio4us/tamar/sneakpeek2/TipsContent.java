@@ -1,11 +1,15 @@
 package com.studio4us.tamar.sneakpeek2;
 
+import java.io.File;
+
 /**
  * Created by Tamar on 3/15/16.
  */
 public class TipsContent {
     private String tip;
     private int likes;
+    private String tag;
+    private File image;
 
     public String getTip() {
         return tip;
@@ -13,6 +17,22 @@ public class TipsContent {
 
     public void setTip(String tip) {
         this.tip = tip;
+    }
+
+    public String getTags(){
+        return tag;
+    }
+
+    public void setTags(String tag){
+        this.tag = tag;
+    }
+
+    public File getImage(){
+        return image;
+    }
+
+    public void setImage(File image){
+        this.image = image;
     }
 
     public String getLikes() {

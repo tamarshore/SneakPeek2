@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -38,6 +40,8 @@ public class ListViewAdapter extends BaseAdapter {
     public class ViewHolder {
         TextView t;
         TextView likes;
+        TextView tags;
+        ImageView imageView;
     }
 
     @Override
@@ -62,13 +66,19 @@ public class ListViewAdapter extends BaseAdapter {
             // Locate the TextViews in listview_item.xml
             holder.t = (TextView) view.findViewById(R.id.tip);
             holder.likes = (TextView) view.findViewById(R.id.likes_counter);
+            holder.tags = (TextView) view.findViewById(R.id.hashtag);
+            holder.imageView = (ImageView) view.findViewById(R.id.img);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
+
         // Set the results into TextViews
         holder.likes.setText(tips.get(position).getLikes());
         holder.t.setText(tips.get(position).getTip());
+        holder.tags.setText(tips.get(position).getTags());
+
+
 
 
         // Listen for ListView Item Click

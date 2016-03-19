@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,8 @@ public class Home extends Fragment {
                     TipsContent map = new TipsContent();
                     map.setTip((String) t.get("TipContent"));
                     map.setLikes((int) t.get("Likes"));
+                    map.setTags((String) t.get("Tags"));
+                    map.setImage((int) t.get("Images"));
                     tips.add(map);
                 }
             } catch (com.parse.ParseException e) {
