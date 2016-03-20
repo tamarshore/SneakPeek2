@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FF569780">
 
     <ImageButton
         android:id="@+id/like_icon"
@@ -23,7 +24,8 @@
         android:textColor="#000000"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:layout_below="@+id/like_icon" />
+        android:layout_below="@+id/like_icon"
+        android:layout_marginLeft="4dp" />
 
     <!--<ImageView-->
         <!--android:layout_width="wrap_content"-->
@@ -35,16 +37,18 @@
     <TextView
         android:id="@+id/tip"
         android:layout_width="314dp"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/likes_counter"
-         />
+        android:layout_gravity="center_horizontal"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/hashtag"
         android:layout_width="314dp"
         android:layout_height="match_parent"
         android:layout_below="@+id/tip"
-        />
+        android:layout_gravity="center_vertical"
+        android:textColor="#fff"/>
 
 
 </LinearLayout>

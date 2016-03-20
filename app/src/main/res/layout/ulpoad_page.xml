@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FF569780"
+    android:weightSum="1">
 
     <EditText
         android:layout_width="match_parent"
@@ -12,7 +14,8 @@
         android:background="@drawable/edittextstyle"
         android:id="@+id/company"
         android:gravity="center"
-        android:hint="Choose Company"/>
+        android:hint="Choose Company"
+        android:layout_weight="0.27" />
 
     <EditText
         android:layout_width="match_parent"
@@ -23,7 +26,8 @@
         android:background="@drawable/edittextstyle"
         android:id="@+id/content"
         android:gravity="start"
-        android:hint="   Insert text here..."/>
+        android:hint="  Insert text here..."
+        android:layout_weight="0.16" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,8 +36,9 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/edittextstyle"
         android:id="@+id/tags"
-        android:hint="   Tags: #"
-        android:layout_gravity="center_horizontal" />
+        android:hint="  Tags:#"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.30" />
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
