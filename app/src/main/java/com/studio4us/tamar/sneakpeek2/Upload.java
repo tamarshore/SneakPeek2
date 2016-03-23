@@ -29,7 +29,7 @@ import com.parse.ParseObject;
 import java.io.ByteArrayOutputStream;
 
 // In this case, the fragment displays simple text based on the page
-public class Upload extends Fragment  implements View.OnClickListener {
+public class Upload extends Fragment implements View.OnClickListener {
     //content of the tip
     EditText content;
     String tip;
@@ -76,7 +76,6 @@ public class Upload extends Fragment  implements View.OnClickListener {
 
         return view;
     }
-
 
 
     @Override
@@ -129,7 +128,7 @@ public class Upload extends Fragment  implements View.OnClickListener {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
 //            imageToUpload.setImageURI(selectedImage);
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
             Cursor cursor = main.getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
