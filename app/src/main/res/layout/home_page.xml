@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FF569780">
-
     <ListView
         android:id="@+id/list"
         android:layout_height="wrap_content"

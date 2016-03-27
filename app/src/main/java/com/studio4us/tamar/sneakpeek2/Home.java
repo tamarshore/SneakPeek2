@@ -1,5 +1,6 @@
 package com.studio4us.tamar.sneakpeek2;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -26,8 +27,10 @@ public class Home extends Fragment {
     ProgressDialog mProgressDialog;
     ListViewAdapter adapter;
     private List<TipsContent> tips = null;
+    String searchString;
     Context con;
 //    ImageButton likes;
+
 
     public static Home newInstance() {
         Bundle args = new Bundle();
@@ -51,8 +54,8 @@ public class Home extends Fragment {
         con = getActivity();
         // Execute RemoteDataTask AsyncTask
         new RemoteDataTask().execute();
-
-
+        searchString = getArguments().getString("searchString");
+        System.out.println(searchString);
         return view;
     }
 
@@ -108,7 +111,6 @@ public class Home extends Fragment {
             listview.setAdapter(adapter);
             // Close the progressdialog
             mProgressDialog.dismiss();
-
 
         }
     }

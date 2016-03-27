@@ -21,7 +21,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
+    android.support.v7.widget.SearchView searchView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +36,37 @@ public class MainActivity extends AppCompatActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+
     }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.dashboard, menu);
-
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
-
-        android.support.v7.widget.SearchView searchView = null;
         if (searchItem != null) {
             searchView = (android.support.v7.widget.SearchView) searchItem.getActionView();
+            searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String arg0) {
+                    System.out.println("hello");
+
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String arg0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("searchString", arg0);
+                    // set Fragmentclass Arguments
+                    Home frag = new Home();
+                    frag.setArguments(bundle);
+                    return false;
+                }
+            });
         }
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
@@ -56,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
         final int PAGE_COUNT = 3;

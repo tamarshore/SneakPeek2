@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class SearchResultsActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,23 +32,4 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.dashboard, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-        SearchManager searchManager = (SearchManager) SearchResultsActivity.this.getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = null;
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(SearchResultsActivity.this.getComponentName()));
-        }
-
-        return super.onCreateOptionsMenu(menu);
-    }
 }
