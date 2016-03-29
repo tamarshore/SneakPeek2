@@ -90,7 +90,7 @@ public class Home extends Fragment {
                     map.setTip((String) t.get("TipContent"));
                     map.setLikes((int) t.get("Likes"));
                     map.setTags((String) t.get("Tags"));
-//                    map.setImage((int) t.get("Images"));
+//                    map.setImage((File) t.get("ImageFile"));
                     map.setObjectId(t.getObjectId());
                     tips.add(map);
                 }

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 
@@ -46,6 +47,8 @@ public class Upload extends Fragment implements View.OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
     String imgDecodableString;
+    ParseFile imageFile;
+    ParseObject tipObject;
     Button upload;
 
     public static Upload newInstance() {
@@ -80,66 +83,68 @@ public class Upload extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //Toast for empty tip
-        CharSequence text = "Please insert content";
-        CharSequence uploadingText = "Posting...";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(getContext(), text, duration);
-        Toast uploadingToast = Toast.makeText(getContext(), uploadingText, duration);
+        switch(v.getId()){
+            //Image upload
+            case R.id.imageToUpload:
+                byte[] data = imageToUpload.toString().getBytes();
+                imageFile = new ParseFile("img_selected.png", data);
+                imageFile.saveInBackground();
 
-        tip = content.getText().toString();
-        name = company.getText().toString();
-        tagsString = tags.getText().toString();
+//                tipObject.put("jobPicture", imageFile);
 
-        //if the user inserted content
-        if (!tip.matches("")) {
-            uploadingToast.show();
-            ParseFile imgFile = null;
-            byte[] data = imageToUpload.toString().getBytes();
-            ParseFile imageFile = new ParseFile("img_selected", data);
-            imageFile.saveInBackground();
+//                tipObject.saveInBackground();
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+            case R.id.button:
+                //Toast for empty tip
+                CharSequence text = "Please insert content";
+                CharSequence uploadingText = "Posting...";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getContext(), text, duration);
+                Toast uploadingToast = Toast.makeText(getContext(), uploadingText, duration);
 
-            ParseObject tipObject = new ParseObject("Tip");
-            tipObject.put("TipContent", tip);
-            tipObject.put("CompanyName", name);
-            tipObject.put("Tags", tagsString);
-            tipObject.put("Likes", 0);
-            tipObject.put("Image", imageFile);
-            tipObject.saveInBackground();
+                tip = content.getText().toString();
+                name = company.getText().toString();
+                tagsString = tags.getText().toString();
 
-            //handling the img to upload
-            switch (v.getId()) {
-                case R.id.imageToUpload:
-                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                    break;
-                case R.id.button:
+                //if the user inserted content
+                if (!tip.matches("")) {
+                    uploadingToast.show();
 
-                    break;
-            }
-        } else {
-            toast.show();
+                    tipObject = new ParseObject("Tip");
+                    tipObject.put("TipContent", tip);
+                    tipObject.put("CompanyName", name);
+                    tipObject.put("Tags", tagsString);
+                    tipObject.put("Likes", 0);
+                    tipObject.put("Image", imageFile);
+                    tipObject.saveInBackground();
+
+
+                } else {
+                    toast.show();
+                }
         }
+
     }
 
-
-    public void onActivityResult(Context main, int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-//            imageToUpload.setImageURI(selectedImage);
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = main.getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-
-            imageToUpload.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+//
+//    public void onActivityResult(Context main, int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+//            Uri selectedImage = data.getData();
+////            imageToUpload.setImageURI(selectedImage);
+//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//
+//            Cursor cursor = main.getContentResolver().query(selectedImage,
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            cursor.close();
+//
+//
+//            imageToUpload.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 //            String[] filePathColumn = { MediaStore.Images.Media.DATA };
 //
 //
@@ -156,6 +161,6 @@ public class Upload extends Fragment implements View.OnClickListener {
 //            // Set the Image in ImageView after decoding the String
 //            imageToUpload.setImageBitmap(BitmapFactory
 //                    .decodeFile(imgDecodableString));
-        }
-    }
+//        }
+//    }
 }
