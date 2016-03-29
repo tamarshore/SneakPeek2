@@ -26,17 +26,21 @@ public class ListViewAdapter extends BaseAdapter {
     Context mContext;
     LayoutInflater inflater;
     private List<TipsContent> tips = null;
-    private ArrayList<TipsContent> arraylist;
+//    private ArrayList<TipsContent> arraylist;
     private ViewHolder holder;
     boolean isLiked = false;
 
-    public ListViewAdapter(Context context,
-                           List<TipsContent> tips) {
+    public ListViewAdapter(Context context) {
         mContext = context;
-        this.tips = tips;
-        inflater = LayoutInflater.from(mContext);
-        this.arraylist = new ArrayList<>();
-        this.arraylist.addAll(tips);
+        this.tips = new ArrayList<>();
+//        this.arraylist = new ArrayList<>();
+//        this.arraylist.addAll(tips);
+    }
+
+    public void setDataList(List<TipsContent> filteredTipsContentList) {
+
+        tips = filteredTipsContentList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder {

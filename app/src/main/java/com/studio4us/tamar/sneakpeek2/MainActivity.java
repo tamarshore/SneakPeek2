@@ -24,13 +24,16 @@ import com.parse.ParseObject;
 public class MainActivity extends AppCompatActivity{
     android.support.v7.widget.SearchView searchView = null;
 
+    private SampleFragmentPagerAdapter sampleFragmentPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
+        sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(sampleFragmentPagerAdapter);
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -52,18 +55,17 @@ public class MainActivity extends AppCompatActivity{
             searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String arg0) {
-                    System.out.println("hello");
+
+                    ITextSubmit home = (ITextSubmit) sampleFragmentPagerAdapter.getItem(0);
+
+                    home.onSubmitText(arg0);
 
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String arg0) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("searchString", arg0);
-                    // set Fragmentclass Arguments
-                    Home frag = new Home();
-                    frag.setArguments(bundle);
+
                     return false;
                 }
             });

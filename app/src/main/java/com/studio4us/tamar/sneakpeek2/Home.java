@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,14 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 // In this case, the fragment displays simple text based on the page
-public class Home extends Fragment {
+public class Home extends Fragment implements ITextSubmit {
     ListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
     ListViewAdapter adapter;
-    private List<TipsContent> tips = null;
+    private List<TipsContent> tips = new ArrayList<>();
     String searchString;
     Context con;
+    private View rootView;
 //    ImageButton likes;
 
 
@@ -52,30 +54,67 @@ public class Home extends Fragment {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.home_page, container, false);
         con = getActivity();
-        // Execute RemoteDataTask AsyncTask
-        new RemoteDataTask().execute();
-        searchString = getArguments().getString("searchString");
-        System.out.println(searchString);
+
+        // Locate the listview in listview_main.xml
+        listview = (ListView) view.findViewById(R.id.list);
+        // Pass the results into ListViewAdapter.java
+        adapter = new ListViewAdapter(con);
+        // Binds the Adapter to the ListView
+        listview.setAdapter(adapter);
+
+        adapter.setDataList(tips);
+
         return view;
     }
 
+    private void filterContentTipsByTag(String tag) {
 
-    public class RemoteDataTask extends AsyncTask<Void, Void, Void> {
+        if(tips == null) {
+            Log.d("yarkoni", "tips list is null");
+            return;
+        }
+
+        if(TextUtils.isEmpty(tag)) {
+            Log.d("yarkoni", "search tag is empty");
+            return;
+        }
+
+        List<TipsContent> filteredTipsContentList = new ArrayList<>();
+
+        for(TipsContent tipsContent:tips) {
+
+            if(tag.equals(tipsContent.getTags())) {
+
+                filteredTipsContentList.add(tipsContent);
+            }
+        }
+
+        adapter.setDataList(filteredTipsContentList);
+
+    }
+
+    @Override
+    public void onSubmitText(String str) {
+
+        new RemoteDataTask().execute(str);
+    }
+
+    public class RemoteDataTask extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Create a progressdialog
-            mProgressDialog = new ProgressDialog(con);
-            // Set progressdialog message
-            mProgressDialog.setMessage("Loading...");
-            mProgressDialog.setIndeterminate(false);
-            // Show progressdialog
-            mProgressDialog.show();
+//            mProgressDialog = new ProgressDialog(con);
+//            // Set progressdialog message
+//            mProgressDialog.setMessage("Loading...");
+//            mProgressDialog.setIndeterminate(false);
+//            // Show progressdialog
+//            mProgressDialog.show();
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... params) {
             // Create the array
             tips = new ArrayList<>();
             try {
@@ -94,6 +133,17 @@ public class Home extends Fragment {
                     map.setObjectId(t.getObjectId());
                     tips.add(map);
                 }
+
+                if(params.length != 0) {
+
+                    String searchString = params[0];
+                    if(!TextUtils.isEmpty(searchString)) {
+                        filterContentTipsByTag(searchString);
+                    } else {
+                        Log.d("Yarkoni", "searchString is null");
+                    }
+                }
+
             } catch (com.parse.ParseException e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -103,14 +153,8 @@ public class Home extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            // Locate the listview in listview_main.xml
-            listview = (ListView) getView().findViewById(R.id.list);
-            // Pass the results into ListViewAdapter.java
-            adapter = new ListViewAdapter(con, tips);
-            // Binds the Adapter to the ListView
-            listview.setAdapter(adapter);
             // Close the progressdialog
-            mProgressDialog.dismiss();
+//            mProgressDialog.dismiss();
 
         }
     }
