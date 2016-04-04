@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF569780">
+    android:background="#B8F4E7">
 
     <ImageButton
         android:id="@+id/like_icon"
@@ -39,16 +39,14 @@
         android:layout_width="314dp"
         android:layout_height="fill_parent"
         android:layout_below="@+id/likes_counter"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#fff"/>
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/hashtag"
         android:layout_width="314dp"
         android:layout_height="match_parent"
         android:layout_below="@+id/tip"
-        android:layout_gravity="center_vertical"
-        android:textColor="#fff"/>
+        android:layout_gravity="center_vertical"/>
 
 
 </LinearLayout>
