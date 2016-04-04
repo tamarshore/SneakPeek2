@@ -23,13 +23,13 @@ import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity{
     android.support.v7.widget.SearchView searchView = null;
-
+    ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
 
         // Give the PagerSlidingTabStrip the ViewPager
@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity{
 
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
-        final int PAGE_COUNT = 3;
-        private int tabIcons[] = {R.drawable.ic_home_black_24dp, R.drawable.ic_add_black_24dp, R.drawable.ic_account_circle_black_24dp};
+        final int PAGE_COUNT = 2;
+        private int tabIcons[] = {R.drawable.ic_home_black_24dp, R.drawable.ic_add_black_24dp};
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity{
                     return Home.newInstance();
                 case 1: // Fragment # 1 - Upload
                     return Upload.newInstance();
-                case 2: // Fragment # 2 - User
-                    return User.newInstance();
+//                case 2: // Fragment # 2 - User
+//                    return User.newInstance();
                 default:
                     return null;
             }

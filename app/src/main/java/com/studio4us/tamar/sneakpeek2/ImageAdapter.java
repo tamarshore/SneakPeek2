@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 
 /**
@@ -38,9 +40,9 @@ public class ImageAdapter extends BaseAdapter {
 
 
         ImageView imageView = new ImageView(mContext);
-
-        imageView.setImageResource(images[position]);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        Picasso.with(mContext).load(images[position]).into(imageView);
+//        imageView.setImageResource(images[position]);
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         imageView.setLayoutParams(new GridView.LayoutParams(360, 360));
 
@@ -48,25 +50,4 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-
-//
-//            public class MyUncaughtExceptionHandle implements Thread.UncaughtExceptionHandler {
-//                @Override
-//                public void uncaughtException(Thread thread, Throwable ex) {
-//                    if(ex.getClass().equals(OutOfMemoryError.class))
-//                    {
-//                        try {
-//                            android.os.Debug.dumpHprofData("/sdcard/dump.hprof");
-//                        }
-//                        catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    ex.printStackTrace();
-//
-//                    Thread.currentThread().setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandle());
-//
-//                }
-//
-//                }
 }
