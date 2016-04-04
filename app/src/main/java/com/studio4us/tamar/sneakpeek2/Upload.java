@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -25,15 +26,15 @@ import android.widget.Toast;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 
 // In this case, the fragment displays simple text based on the page
-public class Upload extends Fragment implements View.OnClickListener {
+public class Upload extends Fragment  implements View.OnClickListener {
     //content of the tip
     EditText content;
     String tip;
+
 
     //company name
     EditText company;
@@ -47,9 +48,11 @@ public class Upload extends Fragment implements View.OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
     String imgDecodableString;
-    ParseFile imageFile;
-    ParseObject tipObject;
     Button upload;
+
+
+
+
 
     public static Upload newInstance() {
         Bundle args = new Bundle();
@@ -81,86 +84,84 @@ public class Upload extends Fragment implements View.OnClickListener {
     }
 
 
+
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            //Image upload
+        //Toast for empty tip
+        CharSequence text = "Please insert content";
+        CharSequence uploadingText = "Posting...";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getContext(), text, duration);
+        Toast uploadingToast = Toast.makeText(getContext(), uploadingText, duration);
+
+        tip = content.getText().toString();
+        name = company.getText().toString();
+        tagsString = tags.getText().toString();
+
+
+        if (!tip.matches("")) {
+//                uploadingToast.show();
+            ParseFile imgFile = null;
+            byte[] img_data = imageToUpload.toString().getBytes();
+            ParseFile imageFile = new ParseFile("img_selected", img_data);
+            imageFile.saveInBackground();
+
+            ParseObject tipObject = new ParseObject("Tip");
+            tipObject.put("TipContent", tip);
+            tipObject.put("CompanyName", name);
+            tipObject.put("Tags", tagsString);
+            tipObject.put("Likes", 0);
+            tipObject.put("Image", imageFile);
+            tipObject.saveInBackground();
+        }
+
+        switch (v.getId()) {
             case R.id.imageToUpload:
-                byte[] data = imageToUpload.toString().getBytes();
-                imageFile = new ParseFile("img_selected.png", data);
-                imageFile.saveInBackground();
-
-//                tipObject.put("jobPicture", imageFile);
-
-//                tipObject.saveInBackground();
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                break;
             case R.id.button:
-                //Toast for empty tip
-                CharSequence text = "Please insert content";
-                CharSequence uploadingText = "Posting...";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(getContext(), text, duration);
-                Toast uploadingToast = Toast.makeText(getContext(), uploadingText, duration);
 
-                tip = content.getText().toString();
-                name = company.getText().toString();
-                tagsString = tags.getText().toString();
-
-                //if the user inserted content
-                if (!tip.matches("")) {
-                    uploadingToast.show();
-
-                    tipObject = new ParseObject("Tip");
-                    tipObject.put("TipContent", tip);
-                    tipObject.put("CompanyName", name);
-                    tipObject.put("Tags", tagsString);
-                    tipObject.put("Likes", 0);
-                    tipObject.put("Image", imageFile);
-                    tipObject.saveInBackground();
-
-
-                } else {
-                    toast.show();
-                }
+                break;
         }
 
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            imageToUpload.setImageURI(selectedImage);
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            ParseFile file = new ParseFile("Image", byteArray);
+            file.saveInBackground();
+
+
+//            ImageView imageView = (ImageView) getActivity().findViewById(R.id.imgView);
+//            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+        }
+    }
+
+//    private class UploadImage extends AsyncTask<Void, Void, Void>{
 //
-//    public void onActivityResult(Context main, int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-//            Uri selectedImage = data.getData();
-////            imageToUpload.setImageURI(selectedImage);
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//        protected void doInBackground(Void...params){
 //
-//            Cursor cursor = main.getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = cursor.getString(columnIndex);
-//            cursor.close();
-//
-//
-//            imageToUpload.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//
-//
-//            // Get the cursor
-//            Cursor cursor = getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            // Move to first row
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            imgDecodableString = cursor.getString(columnIndex);
-//            cursor.close();
-//
-//            // Set the Image in ImageView after decoding the String
-//            imageToUpload.setImageBitmap(BitmapFactory
-//                    .decodeFile(imgDecodableString));
 //        }
+//
 //    }
+
 }
