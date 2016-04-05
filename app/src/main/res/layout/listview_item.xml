@@ -3,29 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="#B8F4E7">
-
-    <ImageButton
-        android:id="@+id/like_icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_toLeftOf="@+id/tip"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_above="@+id/likes_counter"
-        android:focusable="false"
-        />
-
-    <TextView
-        android:id="@+id/likes_counter"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:layout_below="@+id/like_icon"
-        android:layout_marginLeft="4dp" />
 
     <!--<ImageView-->
         <!--android:layout_width="wrap_content"-->
@@ -36,17 +15,42 @@
 
     <TextView
         android:id="@+id/tip"
-        android:layout_width="314dp"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/likes_counter"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp" />
+
+    <ImageButton
+        android:id="@+id/like_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_toLeftOf="@+id/tip"
+        android:layout_marginLeft="20dp"
+        android:layout_above="@+id/likes_counter"
+        android:focusable="false"
+        android:layout_gravity="left" />
 
     <TextView
+        android:id="@+id/likes_counter"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/like_icon"
+        android:layout_marginLeft="17dp"
+        android:layout_gravity="left"/>
+    <TextView
         android:id="@+id/hashtag"
-        android:layout_width="314dp"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tip"
-        android:layout_gravity="center_vertical"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        />
 
 
 </LinearLayout>

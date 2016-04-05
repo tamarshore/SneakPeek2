@@ -1,11 +1,5 @@
 package com.studio4us.tamar.sneakpeek2;
 
-import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.app.SearchableInfo;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,12 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.SearchView;
-
 import com.astuetz.PagerSlidingTabStrip;
-import com.parse.Parse;
-import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity{
     android.support.v7.widget.SearchView searchView = null;
@@ -31,46 +20,17 @@ public class MainActivity extends AppCompatActivity{
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
-
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-
     }
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.dashboard, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-        SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
-        if (searchItem != null) {
-            searchView = (android.support.v7.widget.SearchView) searchItem.getActionView();
-            searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String arg0) {
-                    System.out.println("hello");
-
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String arg0) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("searchString", arg0);
-                    // set Fragmentclass Arguments
-                    Home frag = new Home();
-                    frag.setArguments(bundle);
-                    return false;
-                }
-            });
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
-        }
+        menuInflater.inflate(R.menu.options_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -108,5 +68,6 @@ public class MainActivity extends AppCompatActivity{
             // Generate title based on item position
             return tabIcons[position];
         }
+
     }
 }
