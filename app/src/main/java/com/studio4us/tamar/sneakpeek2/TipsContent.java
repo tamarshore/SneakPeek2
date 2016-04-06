@@ -16,6 +16,7 @@ public class TipsContent {
     private Bitmap image;
     private String obId;
 
+
     public String getTip() {
         return tip;
     }
@@ -55,5 +56,6 @@ public class TipsContent {
     public String getObjectId() {
         return this.obId;
     }
+
 
 }

@@ -41,7 +41,6 @@ public class Home extends Fragment {
     ListViewAdapter adapter;
     private List<TipsContent> tips = null;
     ArrayList<TipsContent> mAllData = new ArrayList<TipsContent>();
-    String searchString;
     Context con;
     View view;
     EditText searchFiled;

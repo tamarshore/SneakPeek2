@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#72A69B">
+
+    <EditText
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Profile"
+        android:textColor="#FFF"
+        android:textSize="20dp"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Choose user-name"
+        android:textColorHint="#FFF"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center_horizontal" />
+
+    <ImageView
+        android:layout_width="106dp"
+        android:layout_height="104dp"
+        android:src="@drawable/user_photo"
+        android:id="@+id/user_photo"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"/>
+    <TextView
+        android:id="@+id/interview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get a peek. Get hired"
+        android:textColor="#FFF"
+        android:textSize="20dp"
+        android:gravity="center|bottom"
+        android:layout_marginTop="20dp"/>
+
+
+</LinearLayout>
