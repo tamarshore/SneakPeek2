@@ -3,6 +3,8 @@ package com.studio4us.tamar.sneakpeek2;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -19,9 +21,12 @@ import android.widget.ActionMenuView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.parse.GetDataCallback;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -135,15 +140,27 @@ public class Home extends Fragment {
             ParseQuery<ParseObject> query = new ParseQuery<>("Tip");
             // Locate the column named "TipContent" in Parse.com and order list
             // by ascending
-            query.orderByAscending("createdAt");
+            query.orderByDescending("Likes");
             ob = query.find();
             for (ParseObject t : ob) {
-                TipsContent map = new TipsContent();
+                final TipsContent map = new TipsContent();
                 map.setTip((String) t.get("TipContent"));
                 map.setLikes((int) t.get("Likes"));
                 map.setTags((String) t.get("Tags"));
-//                    map.setImage((File) t.get("ImageFile"));
                 map.setObjectId(t.getObjectId());
+                ParseFile image = t.getParseFile("Image");
+                if(image != null) {
+                    image.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, com.parse.ParseException e) {
+                            Bitmap bitpic = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bitpic.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            map.setImage(bitpic);
+                        }
+                    });
+                }
+
                 tips.add(map);
             }
         } catch (com.parse.ParseException e) {

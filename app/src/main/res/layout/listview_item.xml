@@ -3,15 +3,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B8F4E7">
+    android:background="#B8F4E7"
+    >
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/img"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp" />
+        android:adjustViewBounds="true"
+        android:layout_centerInParent="true"
+        android:scaleType="fitCenter"
+    />
 
     <TextView
         android:id="@+id/tip"
@@ -50,12 +54,11 @@
 
         <TextView
             android:id="@+id/hashtag"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.22"
-            android:layout_gravity="bottom|right"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="20dp" />
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="bottom|right" />
 
     </LinearLayout>
 </LinearLayout>

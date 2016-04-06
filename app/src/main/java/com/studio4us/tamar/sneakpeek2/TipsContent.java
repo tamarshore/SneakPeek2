@@ -1,5 +1,9 @@
 package com.studio4us.tamar.sneakpeek2;
 
+import android.graphics.Bitmap;
+
+import com.parse.ParseFile;
+
 import java.io.File;
 
 /**
@@ -9,7 +13,7 @@ public class TipsContent {
     private String tip;
     private int likes;
     private String tag;
-    private File image;
+    private Bitmap image;
     private String obId;
 
     public String getTip() {
@@ -28,11 +32,11 @@ public class TipsContent {
         this.tag = tag;
     }
 
-    public File getImage(){
+    public Bitmap getImage(){
         return image;
     }
 
-    public void setImage(File image){
+    public void setImage(Bitmap image){
         this.image = image;
     }
 

@@ -20,7 +20,7 @@ public class SplashScreen extends Activity {
             R.drawable.etsy,
             R.drawable.google,
             R.drawable.marmelada_market,
-            R.drawable.netflix_logo,
+            R.drawable.wix,
             R.drawable.similarweb,
             R.drawable.snapchat,
             R.drawable.viber,
@@ -28,7 +28,7 @@ public class SplashScreen extends Activity {
             R.drawable.waze,
             R.drawable.whatsapp,
             R.drawable.tumblr,
-            R.drawable.soundcloud,
+            R.drawable.linkedin,
     };
 
     @Override
@@ -44,7 +44,7 @@ public class SplashScreen extends Activity {
             public void run(){
                 try{
 
-                    sleep(6200);
+                    sleep(3000);
 
                 }catch(InterruptedException e){
                     e.printStackTrace();
