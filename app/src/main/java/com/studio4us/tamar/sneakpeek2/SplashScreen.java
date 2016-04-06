@@ -27,8 +27,8 @@ public class SplashScreen extends Activity {
             R.drawable.twitter,
             R.drawable.waze,
             R.drawable.whatsapp,
-            R.drawable.linkedin,
-            R.drawable.moovit,
+            R.drawable.tumblr,
+            R.drawable.soundcloud,
     };
 
     @Override

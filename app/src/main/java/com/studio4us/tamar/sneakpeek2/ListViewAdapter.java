@@ -72,7 +72,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder.tags = (TextView) view.findViewById(R.id.hashtag);
 //            holder.imageView = (ImageView) view.findViewById(R.id.img);
             holder.likesCounter = (ImageButton) view.findViewById(R.id.like_icon);
-            holder.likesCounter.setBackgroundResource(R.drawable.ic_favorite_border_black_18dp);
+            holder.likesCounter.setBackgroundResource(R.drawable.thumb_up_outline);
             holder.likesCounter.setTag(position);
             holder.likesCounter.setOnClickListener(new android.view.View.OnClickListener() {
                 public void onClick(View v) {
@@ -83,7 +83,7 @@ public class ListViewAdapter extends BaseAdapter {
 
                     //If the likes icon is clicked
                     if(isLiked) {
-                        v.setBackgroundResource(R.drawable.ic_favorite_black_18dp);
+                        v.setBackgroundResource(R.drawable.thumb_up);
                         query.getInBackground(id, new GetCallback<ParseObject>() {
                             public void done(ParseObject object, ParseException e) {
                                 if (e == null) {
@@ -98,7 +98,7 @@ public class ListViewAdapter extends BaseAdapter {
                         });
                         //If the likes icon is unclicked
                     } else {
-                    v.setBackgroundResource(R.drawable.ic_favorite_border_black_18dp);
+                    v.setBackgroundResource(R.drawable.thumb_up_outline);
                     query.getInBackground(id, new GetCallback<ParseObject>() {
                         public void done(ParseObject object, ParseException e) {
                             if (e == null) {
