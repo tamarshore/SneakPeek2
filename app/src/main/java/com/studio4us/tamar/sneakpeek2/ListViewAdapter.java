@@ -2,6 +2,8 @@ package com.studio4us.tamar.sneakpeek2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +73,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder.t = (TextView) view.findViewById(R.id.tip);
             holder.likes = (TextView) view.findViewById(R.id.likes_counter);
             holder.tags = (TextView) view.findViewById(R.id.hashtag);
-//            holder.imageView = (ImageView) view.findViewById(R.id.img);
+            holder.imageView = (ImageView) view.findViewById(R.id.img);
             holder.likesCounter = (ImageButton) view.findViewById(R.id.like_icon);
             holder.likesCounter.setBackgroundResource(R.drawable.thumb_up_outline);
             holder.likesCounter.setTag(position);
@@ -121,11 +124,21 @@ public class ListViewAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
+        Bitmap image = tips.get(position).getImage();
+        if(image != null){
+            holder.imageView.setVisibility(View.VISIBLE);
+            holder.imageView.setImageBitmap(image);
+            android.view.ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
+            layoutParams.width = 1250;
+            layoutParams.height = 1250;
+            holder.imageView.setLayoutParams(layoutParams);
+        } else {
+            holder.imageView.setVisibility(View.GONE);
+        }
         // Set the results into TextViews
         holder.likes.setText(tips.get(position).getLikes());
         holder.t.setText(tips.get(position).getTip());
         holder.tags.setText(tips.get(position).getTags());
-
         return view;
     }
 

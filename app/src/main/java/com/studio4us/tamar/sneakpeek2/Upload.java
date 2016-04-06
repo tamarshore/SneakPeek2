@@ -86,15 +86,10 @@ public class Upload extends Fragment implements View.OnClickListener {
         switch(v.getId()){
             //Image upload
             case R.id.imageToUpload:
-                byte[] data = imageToUpload.toString().getBytes();
-                imageFile = new ParseFile("img_selected.png", data);
-                imageFile.saveInBackground();
 
-//                tipObject.put("jobPicture", imageFile);
-
-//                tipObject.saveInBackground();
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 0);
             case R.id.button:
                 //Toast for empty tip
                 CharSequence text = "Please insert content";
@@ -116,7 +111,7 @@ public class Upload extends Fragment implements View.OnClickListener {
                     tipObject.put("CompanyName", name);
                     tipObject.put("Tags", tagsString);
                     tipObject.put("Likes", 0);
-                    tipObject.put("Image", imageFile);
+//                    tipObject.put("Image", imageFile);
                     tipObject.saveInBackground();
 
 
@@ -127,33 +122,35 @@ public class Upload extends Fragment implements View.OnClickListener {
 
     }
 
+
+    public void onActivityResult(Context main, int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
+//            imageToUpload.setImageURI(selectedImage);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = main.getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+
+            Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
 //
-//    public void onActivityResult(Context main, int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-//            Uri selectedImage = data.getData();
-////            imageToUpload.setImageURI(selectedImage);
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//
-//            Cursor cursor = main.getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = cursor.getString(columnIndex);
-//            cursor.close();
-//
-//
-//            imageToUpload.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//
-//
-//            // Get the cursor
-//            Cursor cursor = getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            // Move to first row
-//            cursor.moveToFirst();
-//
+            // Convert it to byte
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            // Compress image to lower quality scale 1 - 100
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] image = stream.toByteArray();
+
+            // Create the ParseFile
+            imageFile = new ParseFile("androidbegin.png", image);
+            // Upload the image into Parse Cloud
+            imageFile.saveInBackground();
 //            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 //            imgDecodableString = cursor.getString(columnIndex);
 //            cursor.close();
@@ -161,6 +158,6 @@ public class Upload extends Fragment implements View.OnClickListener {
 //            // Set the Image in ImageView after decoding the String
 //            imageToUpload.setImageBitmap(BitmapFactory
 //                    .decodeFile(imgDecodableString));
-//        }
-//    }
+        }
+    }
 }
