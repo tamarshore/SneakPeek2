@@ -7,7 +7,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
@@ -15,7 +15,7 @@
         android:id="@+id/company"
         android:gravity="center"
         android:hint="Choose Company"
-        android:layout_weight="0.27" />
+        android:alpha="0.7"/>
 
     <FrameLayout
         android:layout_width="fill_parent"
@@ -27,12 +27,12 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="164dp"
             android:background="@drawable/edittextstyle"
             android:id="@+id/content"
-            android:gravity="start"
             android:hint="  Insert text here..."
-            android:layout_weight="0.16" />
+            android:layout_weight="0.16"
+            android:alpha="0.7"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
     </FrameLayout>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
@@ -53,16 +53,10 @@
         android:id="@+id/tags"
         android:hint="  Tags:#"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.30" />
+        android:alpha="0.7"
+        android:layout_alignParentBottom="true"
+        />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Upload"
-        android:background="@drawable/savebuttonsstyle"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,7 +66,5 @@
         android:textColor="#FFF"
         android:textSize="20dp"
         android:layout_gravity="center|bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="100dp" />
 </LinearLayout>

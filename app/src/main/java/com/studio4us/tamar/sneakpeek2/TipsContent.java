@@ -13,8 +13,11 @@ public class TipsContent {
     private String tip;
     private int likes;
     private String tag;
+//    private String userName;
     private Bitmap image;
+//    private Bitmap userImage;
     private String obId;
+
 
     public String getTip() {
         return tip;
@@ -56,4 +59,25 @@ public class TipsContent {
         return this.obId;
     }
 
+    public void increaseLikes(){
+        this.likes++;
+    }
+    public void decreaseLikes(){
+        this.likes--;
+    }
+//    public Bitmap getUserImage() {
+//        return this.userImage;
+//    }
+//
+//    public void setUserImage(Bitmap image) {
+//        this.userImage = image;
+//    }
+
+//    public String getUserName(){
+//        return this.userName;
+//    }
+//
+//    public void setUserName(String userName){
+//        this.userName = userName;
+//    }
 }

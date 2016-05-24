@@ -1,13 +1,8 @@
 package com.studio4us.tamar.sneakpeek2;
 
 import android.app.Activity;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,25 +10,25 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 
 // In this case, the fragment displays simple text based on the page
-public class Upload extends Fragment implements View.OnClickListener {
+public class Upload extends Fragment implements View.OnClickListener, MenuItem.OnMenuItemClickListener {
     //content of the tip
     EditText content;
     String tip;
@@ -49,10 +44,13 @@ public class Upload extends Fragment implements View.OnClickListener {
     //image to uploade
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView imageToUpload;
-    String imgDecodableString;
     ParseFile imageFile;
     ParseObject tipObject;
-    Button upload;
+    MenuItem submit;
+
+    //user details
+//    UserDetails user;
+//    String userName;
 
     public static Upload newInstance() {
         Bundle args = new Bundle();
@@ -71,64 +69,76 @@ public class Upload extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ulpoad_page, container, false);
+        setHasOptionsMenu(true);
+//        user = new UserDetails();
         content = (EditText) view.findViewById(R.id.content);
         company = (EditText) view.findViewById(R.id.company);
         tags = (EditText) view.findViewById(R.id.tags);
-        upload = (Button) view.findViewById(R.id.button);
-        imageToUpload = (ImageView) view.findViewById(R.id.imageToUpload);
 
+        //add image from gallery button
+        imageToUpload = (ImageView) view.findViewById(R.id.imageToUpload);
         imageToUpload.setOnClickListener(this);
-        upload.setOnClickListener(this);
 
         return view;
     }
 
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        submit = menu.findItem(R.id.submit);
+        submit.setVisible(true);
+        submit.setOnMenuItemClickListener(this);
+        menu.findItem(R.id.action_search).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    //submit tip
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        //Toast for empty tip
+        CharSequence text = "Please insert content";
+        CharSequence uploadingText = "Posting...";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getContext(), text, duration);
+        Toast uploadingToast = Toast.makeText(getContext(), uploadingText, duration);
+
+        tip = content.getText().toString();
+        name = company.getText().toString();
+        tagsString = tags.getText().toString();
+//        userName = user.getUserName();
+
+        //if the user inserted content
+        if (!tip.matches("") && !name.matches("")) {
+            uploadingToast.show();
+
+            tipObject = new ParseObject("Tip");
+            tipObject.put("TipContent", tip);
+            tipObject.put("CompanyName", name);
+            tipObject.put("Tags", tagsString);
+            tipObject.put("Likes", 0);
+            if(imageFile != null) {
+                tipObject.put("Image", imageFile);
+            }
+//            if(userName != null) {
+//                tipObject.put("userName", userName);
+//            } else {
+//                tipObject.put("userName", "anonymous");
+//            }
+            tipObject.saveInBackground();
+
+
+        } else {
+            toast.show();
+        }
+        
+        return false;
+    }
+
+    //Add a photo from gallery
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            //Image upload
-            case R.id.imageToUpload:
-
-//                Intent intent = new Intent(Intent.ACTION_PICK,
-//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent, RESULT_LOAD_IMAGE);
-
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select picture"), RESULT_LOAD_IMAGE );
-                break;
-            case R.id.button:
-                //Toast for empty tip
-                CharSequence text = "Please insert content";
-                CharSequence uploadingText = "Posting...";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(getContext(), text, duration);
-                Toast uploadingToast = Toast.makeText(getContext(), uploadingText, duration);
-
-                tip = content.getText().toString();
-                name = company.getText().toString();
-                tagsString = tags.getText().toString();
-
-                //if the user inserted content
-                if (!tip.matches("")) {
-                    uploadingToast.show();
-
-                    tipObject = new ParseObject("Tip");
-                    tipObject.put("TipContent", tip);
-                    tipObject.put("CompanyName", name);
-                    tipObject.put("Tags", tagsString);
-                    tipObject.put("Likes", 0);
-                    tipObject.put("Image", imageFile);
-                    tipObject.saveInBackground();
-
-
-                } else {
-                    toast.show();
-                }
-        }
-
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select picture"), RESULT_LOAD_IMAGE);
     }
 
     @Override

@@ -21,6 +21,8 @@ import android.widget.ActionMenuView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -41,7 +43,6 @@ public class Home extends Fragment {
     ListViewAdapter adapter;
     private List<TipsContent> tips = null;
     ArrayList<TipsContent> mAllData = new ArrayList<TipsContent>();
-    String searchString;
     Context con;
     View view;
     EditText searchFiled;
@@ -136,12 +137,11 @@ public class Home extends Fragment {
         // Create the array
         tips = new ArrayList<>();
         try {
-            // Locate the class table named "Country" in Parse.com
-            ParseQuery<ParseObject> query = new ParseQuery<>("Tip");
+            ParseQuery<ParseObject> queryContent = new ParseQuery<>("Tip");
             // Locate the column named "TipContent" in Parse.com and order list
             // by ascending
-            query.orderByDescending("Likes");
-            ob = query.find();
+            queryContent.orderByDescending("Likes");
+            ob = queryContent.find();
             for (ParseObject t : ob) {
                 final TipsContent map = new TipsContent();
                 map.setTip((String) t.get("TipContent"));
@@ -161,6 +161,31 @@ public class Home extends Fragment {
                     });
                 }
 
+//                String userName = (String) t.get("userName");
+//                ParseQuery<ParseObject> queryUser = new ParseQuery<>("UserDetails");
+//                queryUser.whereEqualTo("userName", userName);
+//                queryUser.getFirstInBackground(new GetCallback<ParseObject>() {
+//                    @Override
+//                    public void done(ParseObject object, com.parse.ParseException e) {
+//                        if (object == null) {
+//                            Log.d("user Details", "The getFirst request failed.");
+//                        } else {
+//                            map.setUserName((String) object.get("userName"));
+//                            ParseFile image = object.getParseFile("Image");
+//                            if (image != null) {
+//                                image.getDataInBackground(new GetDataCallback() {
+//                                    @Override
+//                                    public void done(byte[] data, com.parse.ParseException e) {
+//                                        Bitmap bitpic = BitmapFactory.decodeByteArray(data, 0, data.length);
+//                                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                                        bitpic.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//                                        map.setUserImage(bitpic);
+//                                    }
+//                                });
+//                            }
+//                        }
+//                    }
+//                });
                 tips.add(map);
             }
         } catch (com.parse.ParseException e) {

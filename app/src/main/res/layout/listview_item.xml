@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="#B8F4E7"
     >
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/userImage"-->
+        <!--/>-->
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <!--<TextView-->
+        <!--android:id="@+id/userName"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
+    <FrameLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/img"
-        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:adjustViewBounds="true"
-        android:layout_centerInParent="true"
-        android:scaleType="fitCenter"
-    />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+            >
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/img"
+            android:scaleType="centerCrop"
+            android:layout_centerInParent="true"
+
+        />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp" />
@@ -34,12 +49,13 @@
 
         <ImageButton
             android:id="@+id/like_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="bottom"
             android:layout_toLeftOf="@+id/like_counter"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="15dp"
+            />
 
         <TextView
             android:id="@+id/likes_counter"
@@ -58,6 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginRight="20dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
             android:layout_gravity="bottom|right" />
 
     </LinearLayout>
